@@ -1,0 +1,14 @@
+<!-- <div class="nodes-container studio-canvas">
+  <button (click)="saveNodeJson();">SAVE</button>
+  <div class="nodes" style="height: 100%;">
+    <ng-template class="ss-node" #nodes></ng-template>
+  </div>
+</div> -->
+
+
+<div id="canvas" class="nodes-container studio-canvas">
+  <button (click)="saveNodeJson();">SAVE</button>
+  <div class="nodes" style="height: 100%;">
+    <ng-template class="ss-node" #nodes [showNodesConfig]="showNodesConfig"></ng-template>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+<div class="module-content-container">
+  <div class="module-header-wrapper" style="border-bottom: 1px solid #cccccc;">
+    <div class="module-header-container" class="flex-container"  style="padding: 15px;">
+
+      <div class="module-branding">
+        <div class="module-brand">
+          <clr-icon class="is-solid" style="margin-right: 10px;" [attr.shape]="node.icon"></clr-icon>
+          <span class="module-title">
+            {{ node.name }}
+          </span>
+
+        </div>
+      </div>
+
+      <div class="module-nav" style="margin-left: 25px;">
+        <!-- <a href="javascript://" class="nav-link nav-icon">
+          <clr-icon shape="plus-circle" class="is-solid"></clr-icon>
+        </a> -->
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="module-content-area" style="padding: 10px;">
+
+    <!-- <div class="btn-group btn-outline-primary btn-sm">
+      <button class="btn" (click)="addNodeConnector();">Add Connector</button>
+      <button class="btn">Edit</button>
+      <button class="btn">Download</button>
+      <button class="btn">Delete</button>
+    </div> -->
+
+    <clr-tabs>
+      <clr-tab>
+          <button clrTabLink id="link1">Details</button>
+          <clr-tab-content id="content1" *clrIfActive>
+            <form clrForm>
+              <clr-input-container>
+                <label>Name</label>
+                <input clrInput placeholder="Fill me in, scotty!" name="name" [(ngModel)]="node.name" />
+                <clr-control-helper>This is a label that overrides the how the resource is displayed on workflows and in the catalog.</clr-control-helper>
+              </clr-input-container>
+
+              <clr-input-container>
+                <label>Icon</label>
+                <input clrInput placeholder="Fill me in, scotty!" name="icon" [(ngModel)]="node.icon" />
+                <clr-control-helper>The icon displayed on the workflow and in the catalog.</clr-control-helper>
+              </clr-input-container>
+
+
+
+              <clr-textarea-container>
+                <label>Description</label>
+                <textarea clrTextarea placeholder="Fill me in, scotty!" name="description" [(ngModel)]="node.description"></textarea>
+                <clr-control-helper>The description of the resource displayed on the workflow and in the catalog.</clr-control-helper>
+              </clr-textarea-container>
+            </form>
+
+
+            <button (click)="saveNode();" class="btn btn-sm btn-primary">Save</button>
+            <button (click)="deleteNode();" class="btn btn-sm btn-danger">Delete</button>
+          </clr-tab-content>
+      </clr-tab>
+
+      <clr-tab>
+        <button clrTabLink>Variables</button>
+        <clr-tab-content *clrIfActive>
+
+
+          <div class="module-variables-container" style="margin-top: 10px; height: 80% !important;">
+            <app-records-list-view [table]="'workflowNodeVariables'" [filterOnParent]="true" [parentId]="node._id"></app-records-list-view>
+          </div>
+
+          <button (click)="syncVariablesFromParentModule();" class="btn btn-sm">Sync Variables From Parent</button>
+
+          
+        </clr-tab-content>
+    </clr-tab>
+      <clr-tab>
+          <button clrTabLink>Parent Block Variables</button>
+          <clr-tab-content *clrIfActive>
+            <div class="module-variables-container" style="margin-top: 10px; height: 50% !important;">
+              <app-records-list-view [table]="'blockVariables'" [filterOnParent]="true" [parentId]="node.parent_block"></app-records-list-view>
+            </div>
+            
+          </clr-tab-content>
+      </clr-tab>
+    </clr-tabs>
+
+  
+  </div>
+
+</div>
+

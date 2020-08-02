@@ -1,0 +1,138 @@
+<app-page-loading *ngIf="loading"></app-page-loading>
+
+
+<span *ngIf="item">
+  <clr-wizard #wizard [(clrWizardOpen)]="!loading"
+    (clrWizardOnFinish)="submitRequest()"
+    clrWizardSize="xl">
+    <clr-wizard-title>{{ item.name }}</clr-wizard-title>
+  
+    <clr-wizard-button [type]="'cancel'">Cancel</clr-wizard-button>
+    <clr-wizard-button [type]="'previous'">Back</clr-wizard-button>
+    <clr-wizard-button [type]="'next'">Next</clr-wizard-button>
+    <clr-wizard-button [type]="'finish'">Finish</clr-wizard-button>
+  
+    <clr-wizard-page>
+        <ng-template clrPageTitle>Stack Details</ng-template>
+
+        <div class="alert alert-info" role="alert">
+          <div class="alert-items">
+            <div class="alert-item static">
+              <div class="alert-icon-wrapper">
+                  <clr-icon class="alert-icon" shape="info-circle"></clr-icon>
+              </div>
+              <span class="alert-text">
+                {{ item.description }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+
+        <clr-input-container>
+          <label class="clr-col-12 clr-col-md-3">Stack Name</label>
+          <input class="clr-col-12 clr-col-md-9 w-100" clrInput type="text" [(ngModel)]="item.name" name="name" required/>
+          <clr-control-helper>
+            Give your stack a unique name.
+          </clr-control-helper>
+          <!-- <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error> -->
+        </clr-input-container>
+
+        <clr-textarea-container>
+          <label class="clr-col-12 clr-col-md-3">Stack Description</label>
+          <textarea class="clr-col-12 clr-col-md-9 w-100" clrTextarea type="text" [(ngModel)]="item.description" name="description" required></textarea>
+          <clr-control-helper>
+            Add some info to help you remember why you deployed this stack.
+          </clr-control-helper>
+        </clr-textarea-container>
+
+    </clr-wizard-page>
+
+    <span *ngFor="let n of item.workflow_nodes">
+      <clr-wizard-page *ngIf="!n.start">
+        <ng-template clrPageTitle>{{ n.name }}</ng-template>
+  
+  
+        <div class="alert alert-info" role="alert">
+          <div class="alert-items">
+            <div class="alert-item static">
+              <div class="alert-icon-wrapper">
+                  <clr-icon class="alert-icon" shape="info-circle"></clr-icon>
+              </div>
+              <span class="alert-text">
+                {{ n.description }}
+              </span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="clr-row" *ngFor="let v of n.variables">
+  
+          <clr-input-container *ngIf="v.can_edit == 'true'">
+            <label class="clr-col-12 clr-col-md-3">{{ v.label }}</label>
+            <input class="clr-col-12 clr-col-md-9 w-100" clrInput type="text" [(ngModel)]="n.current_vars[v.name]" name="{{ v.name }}" required/>
+            <clr-control-helper>
+              {{ v.description }}
+            </clr-control-helper>
+            <!-- <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error> -->
+          </clr-input-container>
+  
+  
+          <clr-input-container *ngIf="v.can_edit == 'false'">
+            <label class="clr-col-12 clr-col-md-3">{{ v.label }}</label>
+            <input class="clr-col-12 clr-col-md-9 w-100" clrInput type="text" [(ngModel)]="n.current_vars[v.name]" name="{{ v.name }}" required readonly/>
+            <clr-control-helper>
+              {{ v.description }}
+            </clr-control-helper>
+            <!-- <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error> -->
+          </clr-input-container>
+        </div>
+        
+  
+      </clr-wizard-page>
+    </span>
+  
+
+  
+    <clr-wizard-page>
+      <ng-template clrPageTitle>Review</ng-template>
+      <div class="review-wrapper">
+
+
+        <div class="alert alert-success" role="alert">
+          <div class="alert-items">
+            <div class="alert-item static">
+              <div class="alert-icon-wrapper">
+                  <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+              </div>
+              <span class="alert-text">
+                <strong>Your all set! </strong>  Please review the configuration below and click finish.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <span *ngFor="let n of item.workflow_nodes">
+          <table class="table table-vertical" *ngIf="!n.start">
+            <tbody>
+              <tr>
+                <th colspan="2">
+                  <h4 style="margin-top: 0; padding-top: 0;">
+                    {{ n.name }}
+                  </h4>
+                </th>
+              </tr>
+              <tr *ngFor="let v of n.variables">
+                <th width="25%">{{ v.label }}</th>
+                <td>{{ n.current_vars[v.name] }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </span>
+
+
+      </div>
+    </clr-wizard-page>
+  </clr-wizard>
+</span>
+

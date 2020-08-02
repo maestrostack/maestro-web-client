@@ -1,0 +1,98 @@
+<div class="module-content-container">
+  <div class="module-header-wrapper" style="border-bottom: 1px solid #cccccc;">
+    <div class="module-header-container" class="flex-container"  style="padding: 15px;">
+
+      <div class="module-branding">
+        <div class="module-brand">
+          <clr-icon class="is-solid" style="margin-right: 10px;" shape="design"></clr-icon>
+          <span class="module-title">
+            Workflow Designer
+          </span>
+
+
+
+        </div>
+      </div>
+
+
+      <div class="module-nav" style="margin-left: 25px;">
+        <button class="btn btn-sm btn-primary" (click)="saveWorkflow();">Save</button>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="module-content-area">
+
+
+    <div *ngIf="loading" style="height: 100%; margin-bottom: 500px;">
+      <app-page-loading></app-page-loading>
+    </div>
+
+
+    <as-split unit="pixel">
+      <as-split-area size="250" minSize="225" maxSize="250">
+        <div class="workflow-activity-picker" style="margin: 10px;" *ngIf="blocks$ | async as blocks">
+          <div class="card activity-card" 
+            *ngFor="let m of blocks"
+            [clrDraggable]="m"
+            style="margin-bottom: 10px !important;
+             max-width: 240px !important;
+             margin-top: 0 !important;
+            padding-left: 11px; padding-right: 10px !important;">
+            <div class="card-block flex-container">
+              <span style="margin-right: 10px;">
+                <clr-icon [attr.shape]="m.icon"></clr-icon>
+              </span>
+              <span>
+                {{ m.name }}
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="workflow-activity-picker" style="margin: 10px;" *ngIf="pwshScripts$ | async as modules">
+          <div class="card activity-card" 
+            *ngFor="let m of modules"
+            [clrDraggable]="m"
+            style="margin-bottom: 10px !important;
+             max-width: 240px !important;
+             margin-top: 0 !important;
+            padding-left: 11px; padding-right: 10px !important;">
+            <div class="card-block flex-container">
+              <span style="margin-right: 10px;">
+                <clr-icon [attr.shape]="m.icon"></clr-icon>
+              </span>
+              <span>
+                {{ m.name }}
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </as-split-area>
+
+      <as-split-area size="*">
+
+
+        <app-design-workflow-tree [treelist]="currentlySelectedTree"></app-design-workflow-tree>
+
+
+      </as-split-area>
+
+      <as-split-area size="600">
+        <!-- <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor> -->
+        <div class="workflow-node-details" *ngIf="showNodeConfig">
+          <workflow-node-details [node]="currentNode"></workflow-node-details>
+        </div>
+      </as-split-area>
+    </as-split>
+
+  
+  </div>
+
+</div>
+

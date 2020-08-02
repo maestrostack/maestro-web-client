@@ -1,0 +1,27 @@
+<div class="catalog-browse-container">
+  <div class="catalog-browse-menu">
+
+  </div>
+
+  <div class="catalog-items-container" *ngIf="catalogItems$ | async as items">
+
+    <div class="catalog-items flex-container">
+
+      <a href="..." class="card clickable" *ngFor="let item of items">
+        <!-- <div class="card-header">
+          {{ item.name }}
+        </div> -->
+        <div class="card-block">
+          <div class="card-title">
+            {{ item.name }}
+          </div>
+          <div class="card-text">
+            {{ item.description }}
+          </div>
+        </div>
+      </a>
+
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<app-page-loading *ngIf="loading"></app-page-loading>
+
+<div class="catalog-browse-container" *ngIf="!loading">
+  <div class="catalog-browse-menu">
+
+  </div>
+
+  <div class="catalog-items-container" *ngIf="stacks$ | async as items">
+
+    <div class="catalog-items">
+
+      <div class="clr-row">
+        <div class="clr-col">
+
+          <div class="alert alert-info" role="alert">
+            <div class="alert-items">
+              <div class="alert-item static">
+                <div class="alert-icon-wrapper">
+                    <clr-icon class="alert-icon" shape="info-circle"></clr-icon>
+                </div>
+                <span class="alert-text">Manage an existing stack here by clicking the stack you would like to manage.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="clr-row items-row">
+        <div class="clr-col-lg-3 clr-col-md-6 clr-col-12" *ngFor="let item of items">
+          <a routerLink="/stacks/details/{{ item._id }}" class="card item-card clickable">
+            <div class="card-block">
+              <div class="card-title">
+                {{ item.name }}
+              </div>
+              <p class="card-text">
+                {{ item.description }}
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>

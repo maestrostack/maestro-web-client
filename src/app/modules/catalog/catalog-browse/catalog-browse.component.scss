@@ -1,0 +1,19 @@
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-container > a {
+  width: 300px;
+  height: 200px;
+  margin: 10px;
+}
+
+.items-row > div {
+  height: 200px;
+  margin-bottom: 15px !important;
+}
+
+.item-card {
+  height: 200px;
+}

@@ -1,0 +1,26 @@
+{
+  "name": "root",
+  "children": [
+  {
+  "name": "We Ship Anything Inc - Prod",
+  "description": "Production",
+  "id": "1",
+  "datecreated": "2010-10-10",
+  "installid": "WeShipAnythingProd",
+  "showchildren":"1",
+  "children": [
+    {
+    "name": "UAT EU",
+    "description": "User acceptance testing EU",
+    "id": "2",
+    "datecreated": "2018-7-05",
+    "showchildren":"1",
+    "children": [
+
+    ]
+    }
+  ]
+  }
+  ]
+  }
+  

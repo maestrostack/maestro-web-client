@@ -1,0 +1,112 @@
+<div class="main-container">
+  <div class="alert alert-app-level" *ngIf="alerts">
+      ...
+  </div>
+  <div class="content-container">
+		<clr-vertical-nav [clrVerticalNavCollapsible]="true" [(clrVerticalNavCollapsed)]="collapsed" class="nav-trigger--bottom">
+			<a clrVerticalNavLink routerLink="/pages" routerLinkActive="active">
+				<clr-icon clrVerticalNavIcon shape="home" class="is-solid"></clr-icon>
+				Home
+			</a>
+			<a clrVerticalNavLink routerLink="/stacks" routerLinkActive="active">
+				<clr-icon clrVerticalNavIcon shape="layers" class="is-solid"></clr-icon>
+				Stacks
+			</a>
+			<a clrVerticalNavLink routerLink="/scheduled-tasks" routerLinkActive="active">
+				<clr-icon clrVerticalNavIcon shape="clock" class="is-solid"></clr-icon>
+				Scheduled Tasks
+			</a>
+			<!-- <a clrVerticalNavLink routerLink="/requests" routerLinkActive="active">
+				<clr-icon clrVerticalNavIcon shape="tasks" class="is-solid"></clr-icon>
+				Approvals
+			</a> -->
+			<!-- <a clrVerticalNavLink routerLink="/tower-workflow-templates" routerLinkActive="active">
+				<clr-icon clrVerticalNavIcon shape="ansible"></clr-icon>
+				Tower Workflow Templates
+			</a> -->
+
+			<a clrVerticalNavLink routerLink="/design" routerLinkActive="active" >
+				<clr-icon clrVerticalNavIcon shape="design" class="is-solid"></clr-icon>
+				Design
+			</a>
+
+			<!-- <a clrVerticalNavLink routerLink="/terraform-modules" routerLinkActive="active" >
+				<clr-icon clrVerticalNavIcon shape="terraform"></clr-icon>
+				Terraform Modules
+			</a>
+
+			<a clrVerticalNavLink routerLink="/scripts/pwsh" routerLinkActive="active" >
+				<clr-icon clrVerticalNavIcon shape="powershell"></clr-icon>
+				Powershell Scripts
+			</a> -->
+
+			<!-- <a clrVerticalNavLink routerLink="/tower-workflows" routerLinkActive="active" >
+				<clr-icon clrVerticalNavIcon shape="ansible"></clr-icon>
+				Tower Workflows
+			</a> -->
+
+
+			<a clrVerticalNavLink routerLink="/admin" routerLinkActive="active" >
+				<clr-icon clrVerticalNavIcon shape="administrator" class="is-solid"></clr-icon>
+				Administration
+			</a>
+			<!-- <a clrVerticalNavLink routerLink="./credit" routerLinkActive="active">
+					<clr-icon clrVerticalNavIcon shape="certificate"></clr-icon>
+					Credit
+			</a> -->
+		</clr-vertical-nav>
+		<div class="content-area" style="padding: 0; margin: 0; height: 100%;">
+			<div class="main-container">
+				<!-- <div class="alert alert-app-level">
+						...
+				</div> -->
+				<header class="header header-5">
+					<div class="branding">
+						<a href="javascript://" class="nav-link">
+							<!-- <clr-icon shape="administrator"></clr-icon> -->
+							<span class="title">Maestro</span>
+						</a>
+				</div>
+
+				<div class="header-actions">
+					<clr-dropdown>
+						<button class="nav-icon" clrDropdownTrigger aria-label="toggle settings menu">
+								<clr-icon shape="cog"></clr-icon>
+								<clr-icon shape="caret down"></clr-icon>
+						</button>
+						<clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+								<a href="..." clrDropdownItem>About</a>
+								<a href="..." clrDropdownItem>Preferences</a>
+								<a href="javascript://" (click)="logout();" clrDropdownItem>Log out</a>
+						</clr-dropdown-menu>
+					</clr-dropdown>
+				</div>
+				</header>
+				<!-- <nav class="subnav">
+					<ul class="nav">
+						<li class="nav-item">
+								<a class="nav-link active" href="#">Dashboard</a>
+						</li>
+						<li class="nav-item">
+								<a class="nav-link" href="#">Management</a>
+						</li>
+						<li class="nav-item">
+								<a class="nav-link" href="#">Cloud</a>
+						</li>
+						<li class="nav-item">
+								<a class="nav-link" href="#">Tenants</a>
+						</li>
+					</ul>
+				</nav> -->
+				<div class="content-container">
+						<div class="content-area" style="padding: 0 !important; margin: 0 !important; overflow: hidden;">
+							<router-outlet></router-outlet>
+						</div>
+				</div>
+			</div>
+		</div>
+		<!-- <nav class="sidenav">
+				...
+		</nav> -->
+	</div>
+</div>

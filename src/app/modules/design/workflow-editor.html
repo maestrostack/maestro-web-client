@@ -1,0 +1,137 @@
+<div class="module-content-container">
+  <div class="module-header-wrapper" style="border-bottom: 1px solid #cccccc;">
+    <div class="module-header-container" class="flex-container"  style="padding: 15px;">
+
+      <div class="module-branding">
+        <div class="module-brand">
+          <clr-icon class="is-solid" style="margin-right: 10px;" shape="design"></clr-icon>
+          <span class="module-title">
+            Workflow Designer
+          </span>
+
+        </div>
+      </div>
+
+      <div class="module-nav" style="margin-left: 25px;">
+        <!-- <a href="javascript://" class="nav-link nav-icon">
+          <clr-icon shape="plus-circle" class="is-solid"></clr-icon>
+        </a> -->
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="module-content-area">
+
+
+    <div *ngIf="loading" style="height: 100%; margin-bottom: 500px;">
+      <app-page-loading></app-page-loading>
+    </div>
+
+
+    <as-split unit="pixel">
+      <as-split-area size="250" minSize="225" maxSize="250">
+        <div class="workflow-activity-picker" style="margin: 10px;" *ngIf="terraformModules$ | async as modules">
+          <div class="card activity-card" 
+            *ngFor="let m of modules"
+            [clrDraggable]="m"
+            style="margin-bottom: 10px !important;
+             max-width: 240px !important;
+             margin-top: 0 !important;
+            padding-left: 11px; padding-right: 10px !important;">
+            <div class="card-block flex-container">
+              <span style="margin-right: 10px;">
+                <clr-icon [attr.shape]="m.icon"></clr-icon>
+              </span>
+              <span>
+                {{ m.name }}
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="workflow-activity-picker" style="margin: 10px;" *ngIf="pwshScripts$ | async as modules">
+          <div class="card activity-card" 
+            *ngFor="let m of modules"
+            [clrDraggable]="m"
+            style="margin-bottom: 10px !important;
+             max-width: 240px !important;
+             margin-top: 0 !important;
+            padding-left: 11px; padding-right: 10px !important;">
+            <div class="card-block flex-container">
+              <span style="margin-right: 10px;">
+                <clr-icon [attr.shape]="m.icon"></clr-icon>
+              </span>
+              <span>
+                {{ m.name }}
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </as-split-area>
+
+      <as-split-area size="*">
+        <div class="workflow-canvas-wrapper flex-container">
+
+          <div class="worflow-canvas-container">
+
+            <div class="canvas-main" style="padding: 5px; margin: 5px">
+              <div class="canvas-menu flex-container">
+                <button (click)="onSaveWorkflow();" class="btn btn-sm btn-primary">
+                  SAVE
+                </button>
+              </div>
+
+              <clr-alert [clrAlertType]="'info'">
+                <clr-alert-item>
+                  <span class="alert-text">
+                    Drag and drop workflow nodes from the options on the left.  Double click a node to edit.
+                  </span>
+                </clr-alert-item>
+              </clr-alert>
+              <!-- <div>{{closeMessage}}</div> -->
+            </div>
+
+
+
+            <div class="workflow-canvas" clrDroppable (clrDrop)="onResourceDrop($event);">
+              <!-- <button (click)="nodeContainer.addNode()">Create new node</button> -->
+              <div id="canvas" class="nodes-container studio-canvas">
+                <!-- <button (click)="saveNodeJson();">SAVE</button> -->
+                <div class="nodes" style="height: 100%;">
+                  <ng-template class="ss-node" #nodes [showNodeConfig]="configureNode"></ng-template>
+                </div>
+              </div>
+              
+            </div>
+
+
+
+          </div>
+
+
+
+
+
+          <!-- <div class="node-details" style="height: 100%; width: 60%;" *ngIf="showNodeConfig">
+            
+          </div> -->
+        </div>
+      </as-split-area>
+
+      <as-split-area size="300">
+        <div class="workflow-node-details" *ngIf="showNodeConfig">
+          <workflow-node-details [node]="currentNode"></workflow-node-details>
+        </div>
+      </as-split-area>
+    </as-split>
+
+  
+  </div>
+
+</div>
+

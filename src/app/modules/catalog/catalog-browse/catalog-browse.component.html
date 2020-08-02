@@ -1,0 +1,31 @@
+<app-page-loading *ngIf="loading"></app-page-loading>
+
+<div class="catalog-browse-container" *ngIf="!loading">
+  <div class="catalog-browse-menu">
+
+  </div>
+ 
+  <div class="catalog-items-container" *ngIf="catalogItems$ | async as items">
+
+    <div class="catalog-items">
+
+      <div class="clr-row items-row">
+        <div class="clr-col-lg-3 clr-col-12" *ngFor="let item of items">
+          <a routerLink="/catalog/launch/{{ item._id }}" class="card item-card clickable">
+            <div class="card-block">
+              <div class="card-title">
+                {{ item.name }}
+              </div>
+              <p class="card-text">
+                {{ item.description }}
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>

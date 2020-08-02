@@ -1,0 +1,37 @@
+ <div class="node studio-component-node" id="{{node._id}}" [style.top.px]="node.top || 0" [style.left.px]="node.left || 20">
+  
+     <div class="studio-node-data" style="height: 100%">
+    
+      <a (click)="handleClick($event, node);" style="margin-top: 0px !important" (dblclick)="loadNodeDetails(node)" href="javascript://" class="card clickable">
+        <div class="card-block">
+          <div class="progress danger top">
+            <progress value="100" max="100"></progress>
+          </div>
+          <p class="card-text flex-container">
+            <span style="margin-right: 10px;">
+              <clr-icon [attr.shape]="node.icon"></clr-icon>
+            </span>
+            <span>
+              {{ node.name }}
+            </span>
+          </p>
+        </div>
+      </a>
+    
+     </div>
+
+   </div>
+
+
+<style>
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-container > a {
+  width: 300px;
+  height: 200px;
+  margin: 10px;
+}
+</style>

@@ -1,0 +1,57 @@
+<div class="catalog-content-container">
+  <div class="catalog-content-menu">
+
+  </div>
+
+  <div class="catalog-content-timeline" *ngIf="item$ | async as item">
+    <clr-timeline>
+      <clr-timeline-step clrState="current">
+        <clr-timeline-step-header>START</clr-timeline-step-header>
+        <clr-timeline-step-title>APPROVAL</clr-timeline-step-title>
+        <clr-timeline-step-description>Waiting on approval before moving forward.</clr-timeline-step-description>
+      </clr-timeline-step>
+      <clr-timeline-step clrState="not-started" *ngFor="let n of item.workflow_nodes">
+        <clr-timeline-step-header>
+          Deploy Resource
+          <!-- <clr-icon [attr.shape]="n.icon" style="width: 12px; height: 12px;"></clr-icon> -->
+        </clr-timeline-step-header>
+        <clr-timeline-step-title>{{ n.name }}</clr-timeline-step-title>
+        <clr-timeline-step-description>
+          
+          {{ n.description }}
+          <button class="btn btn-sm">Action</button>
+        </clr-timeline-step-description>
+      </clr-timeline-step>
+      <!-- <clr-timeline-step class="gemini-ignore" clrState="processing">
+        <clr-timeline-step-header>11:59 am</clr-timeline-step-header>
+        <clr-timeline-step-title>Make vCenter trust KMS</clr-timeline-step-title>
+        <clr-timeline-step-description>
+          Root CA certificate requested. Upload it to the KMS to complete the connection. Third sentence is very long
+          and very long.
+        </clr-timeline-step-description>
+      </clr-timeline-step>
+      <clr-timeline-step clrState="success">
+        <clr-timeline-step-header>11:59 am</clr-timeline-step-header>
+        <clr-timeline-step-title>Make KMS trust vCenter</clr-timeline-step-title>
+        <clr-timeline-step-description>Upload it to the KMS to complete the connection. Third
+          sentence.
+          <button class="btn btn-sm btn-link">Action</button>
+        </clr-timeline-step-description>
+      </clr-timeline-step>
+      <clr-timeline-step clrState="error">
+        <clr-timeline-step-header>11:59 am</clr-timeline-step-header>
+        <clr-timeline-step-title>Connected</clr-timeline-step-title>
+        <clr-timeline-step-description>No. It's not connected.</clr-timeline-step-description>
+      </clr-timeline-step> -->
+
+      <clr-timeline-step clrState="not-started">
+        <clr-timeline-step-header>END</clr-timeline-step-header>
+        <clr-timeline-step-title>Complete Message Header HERE</clr-timeline-step-title>
+        <clr-timeline-step-description>Upload it to the KMS to complete the connection. Third
+          sentence.
+          <button class="btn btn-sm btn-link">Action</button>
+        </clr-timeline-step-description>
+      </clr-timeline-step>
+    </clr-timeline>
+  </div>
+</div>

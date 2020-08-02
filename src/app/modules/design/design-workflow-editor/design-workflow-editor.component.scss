@@ -1,0 +1,50 @@
+.flex-container {
+  display: flex;
+  flex-wrap: nowrap;
+
+  .btn {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+.workflow-canvas-wrapper {
+  height: 100%;
+}
+
+
+.worflow-canvas-container {
+  width: 100%;
+  height: 100%;
+  background-size: 40px 40px;
+  background-image: radial-gradient(circle, #000000 1px, rgba(0, 0, 0, 0) 1px);
+}
+
+.WorkflowChart-node {
+  font-size: 12px;
+  // font-family: 'Open Sans', sans-serif, 'FontAwesome';
+}
+
+:not(svg) {
+  transform-origin: 0px 0px;
+}
+
+.WorkflowChart-startText {
+  fill: #FFFFFF;
+  cursor: default;
+}
+
+text {
+  display: block;
+  white-space: nowrap;
+}
+
+.SVGline {
+  /*  What color line do we want, to connect each of our circular employee image photos ? */
+  stroke: #141;
+  stroke-width: 3;
+}
+
+
+
+

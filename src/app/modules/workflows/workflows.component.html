@@ -1,0 +1,63 @@
+<div class="module-content-container">
+  <div class="module-header-wrapper" style="border-bottom: 1px solid #cccccc;">
+    <div class="module-header-container" class="flex-container"  style="padding: 15px;">
+
+      <div class="module-branding">
+        <div class="module-brand">
+          <clr-icon class="is-solid" style="margin-right: 10px;" shape="design"></clr-icon>
+          <span class="module-title">
+            Workflows
+          </span>
+        </div>
+      </div>
+
+      <div class="module-nav" style="margin-left: 25px;">
+        <!-- <a href="javascript://" class="nav-link nav-icon">
+          <clr-icon shape="plus-circle" class="is-solid"></clr-icon>
+        </a> -->
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="module-content-area" style="padding: 10px;">
+
+
+    <app-records-list-view [table]="'workflows'"></app-records-list-view>
+
+  
+  </div>
+
+</div>
+
+<clr-modal [(clrModalOpen)]="addRecord">
+  <h3 class="modal-title">Add Module</h3>
+  <div class="modal-body">
+    <form clrForm>
+      <clr-input-container>
+          <label class="clr-col-12 clr-col-md-3">Name</label>
+          <input class="clr-col-12 clr-col-md-9" clrInput type="text" [(ngModel)]="newRecord.name" name="name" required />
+          <clr-control-helper>The name of the Module displayed to users in the catalog and workflow designer.</clr-control-helper>
+          <!-- <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error> -->
+      </clr-input-container>
+      <clr-input-container>
+        <label class="clr-col-12 clr-col-md-3">Repo</label>
+        <input class="clr-col-12 clr-col-md-9" clrInput type="text" [(ngModel)]="newRecord.repo" name="repo" required />
+        <clr-control-helper>The Git repository for this module.</clr-control-helper>
+        <!-- <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error> -->
+      </clr-input-container>
+      <clr-textarea-container>
+        <label class="clr-col-12 clr-col-md-3">Description</label>
+        <textarea class="clr-col-12 clr-col-md-9" clrTextarea [(ngModel)]="newRecord.description" name="description" required></textarea>
+        <clr-control-helper>A useful description of this module, displayed to users in the workflow designer to provide context.</clr-control-helper>
+        <!-- <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error> -->
+      </clr-textarea-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="addRecord = false">Cancel</button>
+      <!-- <button type="button" class="btn btn-primary" (click)="createRecord()">Ok</button> -->
+  </div>
+</clr-modal>

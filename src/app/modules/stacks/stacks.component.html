@@ -1,0 +1,36 @@
+<app-page-loading *ngIf="loading"></app-page-loading>
+
+<div class="module-content-container" *ngIf="!loading">
+  <div class="module-header-wrapper" style="border-bottom: 1px solid #cccccc;">
+    <div class="module-header-container" class="flex-container"  style="padding: 15px;">
+
+      <div class="module-branding">
+        <div class="module-brand">
+          <clr-icon class="is-solid" style="margin-right: 10px;" shape="layers"></clr-icon>
+          <span class="module-title">
+            Stacks
+          </span>
+        </div>
+      </div>
+
+      <div class="module-nav" style="margin-left: 25px;">
+        <!-- <a href="javascript://" class="nav-link nav-icon">
+          <clr-icon shape="plus-circle" class="is-solid"></clr-icon>
+        </a> -->
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="module-content-area" style="padding: 10px;">
+
+    <router-outlet></router-outlet>
+
+
+  
+  </div>
+
+</div>
+

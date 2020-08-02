@@ -1,0 +1,78 @@
+<div class="main-container">
+  <!-- <div class="alert alert-app-level">
+      ...
+  </div> -->
+  <header class="header header-6">
+    <div class="branding">
+      <a href="javascript://" class="nav-link">
+          <img src="../../../../assets/chst_logo_white.png" style="max-height: 40px; margin-right: 10px;" />
+          <span class="title">Stacks Studio</span>
+      </a>
+  </div>
+    <!-- <div class="header-nav">
+        <a routerLink="/stacks" routerLinkActive="active" class="nav-link"><span class="nav-text">Home</span></a>
+				<a routerLink="/catalog" routerLinkActive="active" class="nav-link"><span class="nav-text">Catalog</span></a>
+				<a routerLink="/admin" routerLinkActive="active" class="nav-link"><span class="nav-text">Admin</span></a>
+		</div> -->
+		
+
+    <div class="header-actions">
+			<clr-dropdown>
+					<button class="nav-icon" clrDropdownTrigger aria-label="toggle settings menu">
+							<clr-icon shape="cog"></clr-icon>
+							<clr-icon shape="caret down"></clr-icon>
+					</button>
+					<clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+							<a href="..." clrDropdownItem>About</a>
+							<a href="..." clrDropdownItem>Preferences</a>
+							<!-- <a href="javascript://" (click)="logout();" clrDropdownItem>Log out</a> -->
+					</clr-dropdown-menu>
+			</clr-dropdown>
+		</div>
+  </header>
+  <nav class="subnav">
+      ...
+  </nav>
+  <div class="content-container">
+      <div class="content-area">
+
+        <div class="workflow-canvas-wrapper">
+
+          <div class="worflow-canvas-container">
+
+
+            <div class="workflow-canvas" clrDroppable (clrDrop)="onResourceDrop($event);">
+
+              
+            </div>
+
+            <button (click)="nodeContainer.addNode()">Create new node</button>
+            <nodes-container #nodeContainer [nodes]="nodes" [connections]="connections"></nodes-container>
+
+          </div>
+        </div>
+        
+      </div>
+      <nav class="sidenav" *ngIf="terraformModules$ | async as modules">
+        <clr-tree>
+          <clr-tree-node *ngFor="let directory of rootDirectory" [(clrExpanded)]="directory.expanded">
+              <clr-icon [attr.shape]="directory.icon"></clr-icon>
+              {{directory.name}}
+              <clr-tree-node *ngFor="let file of modules" [clrDraggable]="file">
+                <clr-draggable-ghost *clrIfDragged>
+                  <clr-icon [attr.shape]="file.icon" size="36" class="is-solid"
+                            style="transform: translate3d(-50%, -50%, 0);"></clr-icon>
+              </clr-draggable-ghost>
+                  <button
+                          (click)="openFile(directory.name, file.name)"
+                          class="clr-treenode-link"
+                          [class.active]="file.active">
+                      <clr-icon [attr.shape]="file.icon" class="is-solid"></clr-icon>
+                      {{file.name}}
+                  </button>
+              </clr-tree-node>
+          </clr-tree-node>
+        </clr-tree>
+      </nav>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+<div class="main-container">
+  <div class="alert alert-app-level" *ngIf="alerts">
+      ...
+  </div>
+  <header class="header header-6">
+    <div class="branding">
+      <a href="javascript://" class="nav-link">
+          <!-- <img src="../../../../assets/icons/apleto-icon.png" style="max-height: 25px; margin-right: 10px;" /> -->
+          <span class="title">Maestro</span>
+      </a>
+  </div>
+    <!-- <div class="header-nav">
+        <a routerLink="/stacks" routerLinkActive="active" class="nav-link"><span class="nav-text">Home</span></a>
+				<a routerLink="/catalog" routerLinkActive="active" class="nav-link"><span class="nav-text">Catalog</span></a>
+				<a routerLink="/admin" routerLinkActive="active" class="nav-link"><span class="nav-text">Admin</span></a>
+		</div> -->
+		
+
+    <div class="header-actions">
+			<clr-dropdown>
+					<button class="nav-icon" clrDropdownTrigger aria-label="toggle settings menu">
+							<clr-icon shape="cog"></clr-icon>
+							<clr-icon shape="caret down"></clr-icon>
+					</button>
+					<clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+							<a href="..." clrDropdownItem>About</a>
+							<a href="..." clrDropdownItem>Preferences</a>
+							<a href="javascript://" (click)="logout();" clrDropdownItem>Log out</a>
+					</clr-dropdown-menu>
+			</clr-dropdown>
+		</div>
+  </header>
+  <div class="content-container">
+		<clr-vertical-nav [clrVerticalNavCollapsible]="true" [(clrVerticalNavCollapsed)]="collapsed" class="nav-trigger--bottom">
+			<a clrVerticalNavLink routerLink="/pages/home" routerLinkActive="active">
+				<clr-icon clrVerticalNavIcon shape="home" class="is-solid"></clr-icon>
+				Home
+			</a>
+			<a clrVerticalNavLink routerLink="/stacks" routerLinkActive="active">
+				<clr-icon clrVerticalNavIcon shape="layers" class="is-solid"></clr-icon>
+				Stacks
+			</a>
+			<a clrVerticalNavLink routerLink="/catalog" routerLinkActive="active">
+				<clr-icon clrVerticalNavIcon shape="store" class="is-solid"></clr-icon>
+				Catalog
+			</a>
+			<!-- <a clrVerticalNavLink routerLink="/requests" routerLinkActive="active">
+				<clr-icon clrVerticalNavIcon shape="tasks" class="is-solid"></clr-icon>
+				Approvals
+			</a> -->
+			<!-- <a clrVerticalNavLink routerLink="/tower-workflow-templates" routerLinkActive="active">
+				<clr-icon clrVerticalNavIcon shape="ansible"></clr-icon>
+				Tower Workflow Templates
+			</a> -->
+
+			<a clrVerticalNavLink routerLink="/workflows" routerLinkActive="active" >
+				<clr-icon clrVerticalNavIcon shape="design" class="is-solid"></clr-icon>
+				Stack Blueprints
+			</a>
+
+			<a clrVerticalNavLink routerLink="/terraform-modules" routerLinkActive="active" >
+				<clr-icon clrVerticalNavIcon shape="terraform"></clr-icon>
+				Terraform Modules
+			</a>
+
+			<a clrVerticalNavLink routerLink="/scripts/pwsh" routerLinkActive="active" >
+				<clr-icon clrVerticalNavIcon shape="powershell"></clr-icon>
+				Powershell Scripts
+			</a>
+
+			<!-- <a clrVerticalNavLink routerLink="/tower-workflows" routerLinkActive="active" >
+				<clr-icon clrVerticalNavIcon shape="ansible"></clr-icon>
+				Tower Workflows
+			</a> -->
+
+
+			<a clrVerticalNavLink routerLink="/admin" routerLinkActive="active" >
+				<clr-icon clrVerticalNavIcon shape="administrator" class="is-solid"></clr-icon>
+				Administration
+			</a>
+			<!-- <a clrVerticalNavLink routerLink="./credit" routerLinkActive="active">
+					<clr-icon clrVerticalNavIcon shape="certificate"></clr-icon>
+					Credit
+			</a> -->
+		</clr-vertical-nav>
+		<div class="content-area" style="padding: 0; margin: 0;">
+			<router-outlet></router-outlet>
+		</div>
+		<!-- <nav class="sidenav">
+				...
+		</nav> -->
+	</div>
+</div>

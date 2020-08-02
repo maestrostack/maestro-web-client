@@ -1,0 +1,17 @@
+<div class="main-container" style="height: calc(100% - 60px) !important;">
+  <div class="content-container">
+    <div class="content-area" style="padding: 0; margin: 0;">
+      <router-outlet></router-outlet>
+    </div>
+    <nav class="sidenav">
+      <section class="sidenav-content">
+        <a routerLink="./users" routerLinkActive="active" class="nav-link">
+          Users
+        </a>
+        <a routerLink="./groups" routerLinkActive="active" class="nav-link">
+          Groups
+        </a>
+      </section>
+    </nav>
+  </div>
+</div>

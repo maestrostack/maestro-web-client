@@ -1,0 +1,214 @@
+<clr-tabs>
+  <clr-tab>
+      <button clrTabLink id="details">Details</button>
+      <clr-tab-content id="details" *clrIfActive="true">
+
+        <div class="alert alert-success" role="alert" *ngIf="saveModuleSuccess">
+          <div class="alert-items">
+            <div class="alert-item static">
+              <div class="alert-icon-wrapper">
+                  <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+              </div>
+              <span class="alert-text">
+                Your changes have been saved to the database.
+              </span>
+            </div>
+          </div>
+        </div>
+
+
+        <form clrForm>
+          
+            <clr-input-container>
+                <label class="clr-col-12 clr-col-md-3">Name</label>
+                <input class="clr-col-12 clr-col-md-9" clrInput type="text" [(ngModel)]="record.name" name="name" required />
+                <clr-control-helper>The name of the Module displayed to users in the catalog and workflow designer.</clr-control-helper>
+                <!-- <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error> -->
+            </clr-input-container>
+            <clr-input-container>
+              <label class="clr-col-12 clr-col-md-3">Repo</label>
+              <input class="clr-col-12 clr-col-md-9" clrInput type="text" [(ngModel)]="record.repo" name="repo" required />
+              <clr-control-helper>The Git repository for this module.</clr-control-helper>
+              <!-- <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error> -->
+            </clr-input-container>
+            <clr-textarea-container>
+              <label class="clr-col-12 clr-col-md-3">Description</label>
+              <textarea class="clr-col-12 clr-col-md-9" clrTextarea [(ngModel)]="record.description" name="description" required></textarea>
+              <clr-control-helper>A useful description of this module, displayed to users in the workflow designer to provide context.</clr-control-helper>
+              <!-- <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error> -->
+            </clr-textarea-container>
+          
+
+          <button class="btn btn-sm btn-primary" (click)="saveModule(record)">Save</button>
+        </form>
+      </clr-tab-content>
+  </clr-tab>
+  <clr-tab>
+    <button clrTabLink>Variables</button>
+    <clr-tab-content *clrIfActive>
+      <br>
+      <!-- VARIABLES DG -->
+      <clr-datagrid *ngIf="variables$ | async as records">
+
+
+        <clr-dg-action-bar style="margin-top: 0px !important;">
+          <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-secondary" (click)="onAdd()"><clr-icon shape="plus"></clr-icon> Add Variable </button>
+            <!-- <button type="button" class="btn btn-sm btn-secondary" (click)="onDelete()" ><clr-icon shape="close"></clr-icon> Delete</button>
+            <button type="button" class="btn btn-sm btn-secondary" (click)="onEdit()" *ngIf="selected.length == 1"><clr-icon shape="pencil"></clr-icon> Edit</button> -->
+          </div>
+          <!-- <div class="btn-group">
+            <clr-dropdown>
+                <button type="button" class="btn btn-sm btn-secondary" clrDropdownTrigger>
+                    Export
+                    <clr-icon shape="caret down"></clr-icon>
+                </button>
+                <clr-dropdown-menu clrPosition="bottom-left" *clrIfOpen>
+                    <button type="button" (click)="onExportAll()" clrDropdownItem>Export All</button>
+                    <button type="button" (click)="onExportSelected()" [disabled]="selected.length === 0" clrDropdownItem>Export Selected Items</button>
+                </clr-dropdown-menu>
+            </clr-dropdown>
+          </div> -->
+        </clr-dg-action-bar>
+  
+  
+        <clr-dg-placeholder>Hmm... We couldn't find any variables for this module!</clr-dg-placeholder>
+        <clr-dg-column [clrDgField]="'name'">
+          <ng-container *clrDgHideableColumn="{hidden: false}">
+            Name
+          </ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'description'">
+          <ng-container *clrDgHideableColumn="{hidden: false}">
+            Description
+          </ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'created_by'">
+          <ng-container *clrDgHideableColumn="{hidden: true}">
+            Created by
+          </ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'created'">
+          <ng-container *clrDgHideableColumn="{hidden: false}">
+            Created
+          </ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'updated_by'">
+          <ng-container *clrDgHideableColumn="{hidden: true}">
+            Updated by
+          </ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'updated'">
+          <ng-container *clrDgHideableColumn="{hidden: false}">
+            Updated
+          </ng-container>
+        </clr-dg-column>
+        
+    
+        <clr-dg-row *clrDgItems="let r of records" [clrDgItem]="r">
+          <clr-dg-action-overflow>
+            <button class="action-item" (click)="onDelete(r)">Delete</button>
+          </clr-dg-action-overflow>
+          <clr-dg-cell>{{r.name}}</clr-dg-cell>
+          <!-- <clr-dg-cell>{{r.repo}}</clr-dg-cell> -->
+          <clr-dg-cell>{{r.description}}</clr-dg-cell>
+          <clr-dg-cell>{{r.created_by}}</clr-dg-cell>
+          <clr-dg-cell>{{r.created_at | date }}</clr-dg-cell>
+          <clr-dg-cell>{{r.updated_by}}</clr-dg-cell>
+          <clr-dg-cell>{{r.updated_at | date }}</clr-dg-cell>
+        </clr-dg-row>
+
+        <clr-dg-footer>
+          <clr-dg-pagination #pagination [clrDgPageSize]="10">
+            <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Variables per page</clr-dg-page-size>
+            {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+            of {{pagination.totalItems}} variables
+          </clr-dg-pagination>
+        </clr-dg-footer>
+    
+
+  
+  
+        <!-- <clr-dg-detail *clrIfDetail="let detail"> -->
+
+          <ng-template clrIfDetail let-detail (clrIfDetailChange)="onModuleDetailOpen($event)">
+            <clr-dg-detail>
+              <clr-dg-detail-header>{{detail.name}}</clr-dg-detail-header>
+              <clr-dg-detail-body>
+
+                <div class="alert alert-success" role="alert" *ngIf="saveVariableSuccess">
+                  <div class="alert-items">
+                    <div class="alert-item static">
+                      <div class="alert-icon-wrapper">
+                          <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+                      </div>
+                      <span class="alert-text">
+                        Your changes have been saved to the database.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <form clrForm>
+                  <clr-input-container>
+                      <label class="clr-col-12 clr-col-md-3">Label</label>
+                      <input class="clr-col-12 clr-col-md-9" clrInput type="text" [(ngModel)]="detail.label" name="label" required />
+                      <clr-control-helper>The label for the variable that is displayed to users in the catalog.</clr-control-helper>
+                      <!-- <clr-control-error></clr-control-error> -->
+                  </clr-input-container>
+                  <clr-input-container>
+                    <label class="clr-col-12 clr-col-md-3">Name</label>
+                    <input class="clr-col-12 clr-col-md-9" clrInput type="text" [(ngModel)]="detail.name" name="name" required />
+                    <clr-control-helper>The name of the variable that exists in the Terraform Module.</clr-control-helper>
+                    <!-- <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error> -->
+                  </clr-input-container>
+                  <clr-textarea-container>
+                    <label class="clr-col-12 clr-col-md-3">Description</label>
+                    <textarea class="clr-col-12 clr-col-md-9" clrTextarea [(ngModel)]="detail.description" name="description" required></textarea>
+                    <clr-control-helper>Description or help text that will displayed to user in the catalog to explain the variable.</clr-control-helper>
+                    <!-- <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error> -->
+                  </clr-textarea-container>
+    
+                  <button (click)="saveRecord(detail)" type="button" class="btn btn-sm btn-primary">
+                    Save
+                  </button>
+                </form>
+              </clr-dg-detail-body>
+            </clr-dg-detail>
+          </ng-template>
+
+        <!-- </clr-dg-detail> -->
+      </clr-datagrid>
+    </clr-tab-content>
+  </clr-tab>
+</clr-tabs>
+
+<clr-modal [(clrModalOpen)]="addRecord">
+  <h3 class="modal-title">Add Variable</h3>
+  <div class="modal-body">
+    <form clrForm>
+      <clr-input-container>
+          <label class="clr-col-12 clr-col-md-3">Label</label>
+          <input class="clr-col-12 clr-col-md-9" clrInput type="text" [(ngModel)]="newRecord.label" name="label" required />
+          <clr-control-helper>The label for the variable that is displayed to users in the catalog.</clr-control-helper>
+          <!-- <clr-control-error></clr-control-error> -->
+      </clr-input-container>
+      <clr-input-container>
+        <label class="clr-col-12 clr-col-md-3">Name</label>
+        <input class="clr-col-12 clr-col-md-9" clrInput type="text" [(ngModel)]="newRecord.name" name="name" required />
+        <clr-control-helper>The name of the variable that exists in the Terraform Module.</clr-control-helper>
+        <!-- <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error> -->
+      </clr-input-container>
+      <clr-textarea-container>
+        <label class="clr-col-12 clr-col-md-3">Description</label>
+        <textarea class="clr-col-12 clr-col-md-9" clrTextarea [(ngModel)]="newRecord.description" name="description" required></textarea>
+        <clr-control-helper>Description or help text that will displayed to user in the catalog to explain the variable.</clr-control-helper>
+        <!-- <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error> -->
+      </clr-textarea-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="addRecord = false">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="createRecord()">Ok</button>
+  </div>
+</clr-modal>

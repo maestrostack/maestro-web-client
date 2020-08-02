@@ -1,0 +1,81 @@
+<div class="catalog-content-container" *ngIf="item$ | async as item">
+  <div class="catalog-content-menu">
+
+  </div>
+
+  <div class="clr-row">
+
+    <div class="clr-col" *ngIf="!displayNodeDetails">
+      <div class="catalog-content-timeline" *ngIf="nodes$ | async as nodes">
+        <clr-timeline clrLayout="vertical" style="width: 95%">
+          <clr-timeline-step [clrState]="item.ui_start_icon">
+            <clr-timeline-step-header>START</clr-timeline-step-header>
+            <clr-timeline-step-title>{{ item.ui_start_header }}</clr-timeline-step-title>
+            <clr-timeline-step-description>{{ item.ui_start_msg }}</clr-timeline-step-description>
+          </clr-timeline-step>
+          <clr-timeline-step [clrState]="n.ui_state_icon" *ngFor="let n of nodes">
+            <clr-timeline-step-header>
+              {{ n.state }}
+              <!-- <clr-icon [attr.shape]="n.icon" style="width: 12px; height: 12px;"></clr-icon> -->
+            </clr-timeline-step-header>
+            <clr-timeline-step-title>{{ n.name }}</clr-timeline-step-title>
+            <clr-timeline-step-description>
+              
+              {{ n.description }}
+
+              <pre style="font-size: 12px; border: none; padding: 10px; background-color: black; color: chartreuse; max-height: 300px; min-width: 70vw; overflow: scroll; overflow-wrap: break-word;">
+                {{n.ui_console_out}}
+              </pre>
+              <button class="btn btn-sm" (click)="showNodeDetails(n);">Details</button>
+            </clr-timeline-step-description>
+          </clr-timeline-step>
+          <!-- <clr-timeline-step class="gemini-ignore" clrState="processing">
+            <clr-timeline-step-header>11:59 am</clr-timeline-step-header>
+            <clr-timeline-step-title>Make vCenter trust KMS</clr-timeline-step-title>
+            <clr-timeline-step-description>
+              Root CA certificate requested. Upload it to the KMS to complete the connection. Third sentence is very long
+              and very long.
+            </clr-timeline-step-description>
+          </clr-timeline-step>
+          <clr-timeline-step clrState="success">
+            <clr-timeline-step-header>11:59 am</clr-timeline-step-header>
+            <clr-timeline-step-title>Make KMS trust vCenter</clr-timeline-step-title>
+            <clr-timeline-step-description>Upload it to the KMS to complete the connection. Third
+              sentence.
+              <button class="btn btn-sm btn-link">Action</button>
+            </clr-timeline-step-description>
+          </clr-timeline-step>
+          <clr-timeline-step clrState="error">
+            <clr-timeline-step-header>11:59 am</clr-timeline-step-header>
+            <clr-timeline-step-title>Connected</clr-timeline-step-title>
+            <clr-timeline-step-description>No. It's not connected.</clr-timeline-step-description>
+          </clr-timeline-step> -->
+    
+          <clr-timeline-step [clrState]="item.ui_end_icon">
+            <clr-timeline-step-header>END</clr-timeline-step-header>
+            <clr-timeline-step-title></clr-timeline-step-title>
+            <clr-timeline-step-description>
+              
+              <!-- <button class="btn btn-sm btn-link">Action</button> -->
+            </clr-timeline-step-description>
+          </clr-timeline-step>
+        </clr-timeline>
+      </div>
+    </div>
+
+    <div class="clr-col" *ngIf="displayNodeDetails">
+
+      <app-page-loading *ngIf="displayDetailsLoading"></app-page-loading>
+
+      <div class="node-details-container" *ngIf="!displayDetailsLoading" style="background-color: black; color: floralwhite; height: 90%; overflow: scroll;">
+        <pre *ngIf="details$ | async as details" style="font-size: 12px; border: none;">
+          {{details.ui_console_out}}
+        </pre>
+        
+      </div>
+
+    </div>
+  </div>
+
+
+</div>

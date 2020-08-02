@@ -1,0 +1,98 @@
+<div class="alert alert-success" role="alert" *ngIf="saveRecordSuccess">
+  <div class="alert-items">
+    <div class="alert-item static">
+      <div class="alert-icon-wrapper">
+          <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+      </div>
+      <span class="alert-text">
+        Your changes have been saved to the database.
+      </span>
+    </div>
+  </div>
+</div>
+
+
+<div class="alert alert-danger" role="alert" *ngIf="saveRecordError">
+  <div class="alert-items">
+    <div class="alert-item static">
+      <div class="alert-icon-wrapper">
+          <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+      </div>
+      <span class="alert-text">
+        Your changes could not be saved to the database, please try again.
+      </span>
+    </div>
+  </div>
+</div>
+
+
+<form clrForm *ngIf="table">
+  <span class="w-100" *ngFor="let f of table.addRecordForm.fields">
+    <clr-input-container *ngIf="f.type == 'text'">
+      <label class="clr-col-12 clr-col-md-3">{{ f.label }}</label>
+      <input class="clr-col-12 clr-col-md-9" clrInput type="text" [(ngModel)]="record[f.name]" name="{{ f.name }}" required />
+      <clr-control-helper>
+        {{ f.help }}
+      </clr-control-helper>
+      <!-- <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error> -->
+  </clr-input-container>
+
+
+  <!-- TEXTAREA -->
+
+  <clr-textarea-container *ngIf="f.type == 'textarea'">
+    <label class="clr-col-12 clr-col-md-3">{{ f.label }}</label>
+    <textarea class="clr-col-12 clr-col-md-9" clrTextarea [(ngModel)]="record[f.name]" name="{{ f.name }}" required></textarea>
+    <clr-control-helper>
+      {{ f.help }}
+    </clr-control-helper>
+    <!-- <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error> -->
+  </clr-textarea-container>
+
+  <!-- SELECT -->
+
+  <clr-select-container *ngIf="f.type == 'select'">
+    <label class="clr-col-12 clr-col-md-3">{{ f.label }}</label>
+    <select class="clr-col-12 clr-col-md-9" clrSelect name="{{ f.name }}" [(ngModel)]="record[f.name]">
+      <option value=true>True</option>
+      <option value=false>False</option>
+      <!-- <option value="three">Three</option> -->
+    </select>
+    <clr-control-helper>
+      {{ f.help }}
+    </clr-control-helper>
+  </clr-select-container>
+
+
+  <!-- PASSWORD -->
+
+  <clr-password-container *ngIf="f.type == 'password'">
+    <label class="clr-col-12 clr-col-md-3">{{ f.label }}</label>
+
+    <input class="clr-col-12 clr-col-md-9"  clrPassword placeholder="Password please!" name="{{ f.name }}" [(ngModel)]="record[f.name]" />
+  </clr-password-container>
+
+
+    <!-- SELECT REFERENCE -->
+
+    <clr-select-container *ngIf="f.type == 'select-reference'">
+      <label class="clr-col-12 clr-col-md-3">{{ f.label }}</label>
+      <select class="clr-col-12 clr-col-md-9" clrSelect name="{{ f.name }}" [(ngModel)]="record[f.name]">
+        <option *ngFor="let option of f.reference_options" [value]="option[f.reference.parentKey]">{{ option[f.reference.parentDisplay]}}</option>
+        <!-- <option value="three">Three</option> -->
+      </select>
+      <clr-control-helper>
+        {{ f.help }}
+      </clr-control-helper>
+    </clr-select-container>
+
+
+
+    <!-- END FORM FIELDS -->
+
+  
+  </span>
+
+  <button (click)="updateRecord();" class="btn btn-primary btn-sm">Save</button>
+
+</form>

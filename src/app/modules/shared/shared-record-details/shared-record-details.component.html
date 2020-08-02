@@ -1,0 +1,52 @@
+<clr-tabs>
+  <clr-tab *ngFor="let tab of table.recordDetailTabs">
+      <button clrTabLink>{{ tab.label }}</button>
+      <clr-tab-content *clrIfActive>
+          <div style="margin-top: 15px;">
+            <app-shared-record-edit [table]="table" [record]="record" *ngIf="tab.type == 'edit-record'"></app-shared-record-edit>
+            <app-records-list-view [table]="tab.child" [filterOnParent]="tab.filterOnParent" [parentId]="record._id" *ngIf="tab.type == 'child-table'"></app-records-list-view>
+
+            <div class="launch-workflow-designer" *ngIf="tab.type == 'launch-workflow-designer'">
+
+                <a routerLink="/design/workflows/editor/{{ record._id }}" class="btn btn-lg btn-icon">
+                    <clr-icon shape="organization"></clr-icon>
+                    Open Editor
+                </a>
+
+            </div>
+        </div>
+
+
+        <!-- <app-shared-record-related-table [table]="tab.parent" *ngIf="tab.type == 'child-table'"></app-shared-record-related-table> -->
+        <!-- <app-shared-record-related-table [table]="tab.parent" *ngIf="tab.type == 'child-table'"></app-shared-record-related-table> -->
+      </clr-tab-content>
+  </clr-tab>
+
+  <!-- <clr-tab>
+      <button clrTabLink>Management</button>
+      <clr-tab-content *clrIfActive>
+          ...
+      </clr-tab-content>
+  </clr-tab>
+
+  <clr-tab>
+      <button clrTabLink>Cloud</button>
+      <clr-tab-content *clrIfActive>
+          ...
+      </clr-tab-content>
+  </clr-tab>
+
+  <clr-tab>
+      <button clrTabLink [clrTabLinkInOverflow]="inOverflow">Settings</button>
+      <clr-tab-content *clrIfActive>
+          ...
+      </clr-tab-content>
+  </clr-tab>
+  
+  <clr-tab>
+      <button clrTabLink [clrTabLinkInOverflow]="inOverflow">Alerts</button>
+      <clr-tab-content *clrIfActive>
+          ...
+      </clr-tab-content>
+  </clr-tab> -->
+</clr-tabs>

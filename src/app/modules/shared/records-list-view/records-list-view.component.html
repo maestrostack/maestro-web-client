@@ -1,0 +1,175 @@
+<app-page-loading *ngIf="loading"></app-page-loading>
+
+<span class="list-view-content" *ngIf="!loading">
+  <clr-datagrid *ngIf="records$ | async as records">
+
+
+    <clr-dg-action-bar style="margin-top: 0px !important;">
+      <div class="btn-group">
+        <button *ngIf="!currentTable.hideAddAction" type="button" class="btn btn-sm btn-secondary" (click)="onCreateRecord()"><clr-icon shape="plus"></clr-icon> Add {{ currentTable.singularName }} </button>
+        <!-- <button type="button" class="btn btn-sm btn-secondary" (click)="onDelete()" ><clr-icon shape="close"></clr-icon> Delete</button>
+        <button type="button" class="btn btn-sm btn-secondary" (click)="onEdit()" *ngIf="selected.length == 1"><clr-icon shape="pencil"></clr-icon> Edit</button> -->
+      </div>
+      <!-- <div class="btn-group">
+        <clr-dropdown>
+            <button type="button" class="btn btn-sm btn-secondary" clrDropdownTrigger>
+                Export
+                <clr-icon shape="caret down"></clr-icon>
+            </button>
+            <clr-dropdown-menu clrPosition="bottom-left" *clrIfOpen>
+                <button type="button" (click)="onExportAll()" clrDropdownItem>Export All</button>
+                <button type="button" (click)="onExportSelected()" [disabled]="selected.length === 0" clrDropdownItem>Export Selected Items</button>
+            </clr-dropdown-menu>
+        </clr-dropdown>
+      </div> -->
+    </clr-dg-action-bar>
+   
+  
+    <!-- PLACEHOLDER - NO RECORDS  -->
+    <clr-dg-placeholder>Hmm... We couldn't find any records!</clr-dg-placeholder>
+
+    <!-- TABLE COLUMNS -->
+    <clr-dg-column [clrDgField]="c.name" *ngFor="let c of currentTable.listViewCols">
+      <ng-container *clrDgHideableColumn="{hidden: c.hide}">
+        {{ c.label }}
+      </ng-container>
+    </clr-dg-column>
+    
+    <!-- TABLE RECORDS -->
+    <clr-dg-row *clrDgItems="let r of records" [clrDgItem]="r">
+      <clr-dg-action-overflow>
+        <button class="action-item" (click)="onDelete(r)">Delete</button>
+      </clr-dg-action-overflow>
+      <clr-dg-cell *ngFor="let c of currentTable.listViewCols">
+        
+
+        <span *ngIf="c.type == 'string'">
+          {{r[c.name]}}
+        </span>
+ 
+        <span *ngIf="c.type == 'reference'">
+          {{r[c.name + '_current'][c.reference.parentDisplay]}}
+        </span>
+      </clr-dg-cell>
+      <!-- <clr-dg-cell>{{r.repo}}</clr-dg-cell>
+      <clr-dg-cell>{{r.description}}</clr-dg-cell>
+      <clr-dg-cell>{{r.created_by}}</clr-dg-cell>
+      <clr-dg-cell>{{r.created_at | date }}</clr-dg-cell>
+      <clr-dg-cell>{{r.updated_by}}</clr-dg-cell>
+      <clr-dg-cell>{{r.updated_at | date }}</clr-dg-cell> -->
+    </clr-dg-row>
+  
+    <clr-dg-footer>
+      <clr-dg-pagination #pagination [clrDgPageSize]="100">
+        <clr-dg-page-size [clrPageSizeOptions]="[100,150,200,250]">Variables per page</clr-dg-page-size>
+        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+        of {{pagination.totalItems}} variables
+      </clr-dg-pagination>
+    </clr-dg-footer>
+  
+  
+    <clr-dg-detail *clrIfDetail="let detail">
+      <clr-dg-detail-header *ngIf="currentTable.servicePath == 'Users'">{{ detail.first_name }} {{ detail.last_name }}</clr-dg-detail-header>
+      <clr-dg-detail-header *ngIf="currentTable.servicePath != 'users'">{{detail.name}}</clr-dg-detail-header>
+      <clr-dg-detail-body>
+        <app-shared-record-details [record]="detail" [table]="currentTable"></app-shared-record-details>
+      </clr-dg-detail-body>
+    </clr-dg-detail>
+  </clr-datagrid>
+  
+  
+  <clr-modal [(clrModalOpen)]="showCreateRecord">
+    <h3 class="modal-title">Add {{ currentTable.singularName }}</h3>
+    <div class="modal-body">
+      <form clrForm *ngIf="currentTable">
+
+        <!-- TEXT INPUT -->
+        <span class="w-100" *ngFor="let f of currentTable.addRecordForm.fields">
+          <clr-input-container *ngIf="f.type == 'text'">
+            <label class="clr-col-12 clr-col-md-3">{{ f.label }}</label>
+            <input class="clr-col-12 clr-col-md-9" clrInput type="text" [(ngModel)]="newRecord[f.name]" name="{{ f.name }}" required />
+            <clr-control-helper>
+              {{ f.help }}
+            </clr-control-helper>
+            <!-- <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error> -->
+        </clr-input-container>
+
+        <!-- NUMBER INPUT -->
+          <clr-input-container *ngIf="f.type == 'number'">
+            <label class="clr-col-12 clr-col-md-3">{{ f.label }}</label>
+            <input class="clr-col-12 clr-col-md-9" clrInput type="number" [(ngModel)]="newRecord[f.name]" name="{{ f.name }}" required />
+            <clr-control-helper>
+              {{ f.help }}
+            </clr-control-helper>
+            <!-- <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error> -->
+        </clr-input-container>
+
+
+        <!-- TEXTAREA -->
+
+        <clr-textarea-container *ngIf="f.type == 'textarea'">
+          <label class="clr-col-12 clr-col-md-3">{{ f.label }}</label>
+          <textarea class="clr-col-12 clr-col-md-9" clrTextarea [(ngModel)]="newRecord[f.name]" name="{{ f.name }}" required></textarea>
+          <clr-control-helper>
+            {{ f.help }}
+          </clr-control-helper>
+          <!-- <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error> -->
+        </clr-textarea-container>
+
+
+        <!-- SELECT -->
+
+        <clr-select-container *ngIf="f.type == 'select'">
+          <label class="clr-col-12 clr-col-md-3">{{ f.label }}</label>
+          <select class="clr-col-12 clr-col-md-9" clrSelect name="{{ f.name }}" [(ngModel)]="newRecord[f.name]">
+            <option value=true>True</option>
+            <option value=false>False</option>
+            <!-- <option value="three">Three</option> -->
+          </select>
+          <clr-control-helper>
+            {{ f.help }}
+          </clr-control-helper>
+        </clr-select-container>
+
+
+        <clr-password-container *ngIf="f.type == 'password'">
+          <label class="clr-col-12 clr-col-md-3">{{ f.label }}</label>
+
+          <input class="clr-col-12 clr-col-md-9"  clrPassword placeholder="Password please!" name="{{ f.name }}" [(ngModel)]="newRecord[f.name]" />
+        </clr-password-container>
+
+
+        <!-- SELECT REFERENCE -->
+
+        <clr-select-container *ngIf="f.type == 'select-reference'">
+          <label class="clr-col-12 clr-col-md-3">{{ f.label }}</label>
+          <select class="clr-col-12 clr-col-md-9" clrSelect name="{{ f.name }}" [(ngModel)]="newRecord[f.name]">
+            <option *ngFor="let option of f.reference_options" [value]="option[f.reference.parentKey]">{{ option[f.reference.parentDisplay]}}</option>
+            <!-- <option value=false>False</option> -->
+            <!-- <option value="three">Three</option> -->
+          </select>
+          <clr-control-helper>
+            {{ f.help }}
+          </clr-control-helper>
+        </clr-select-container>
+
+
+        <clr-password-container *ngIf="f.type == 'password'">
+          <label class="clr-col-12 clr-col-md-3">{{ f.label }}</label>
+
+          <input class="clr-col-12 clr-col-md-9"  clrPassword placeholder="Password please!" name="{{ f.name }}" [(ngModel)]="newRecord[f.name]" />
+        </clr-password-container>
+
+
+        <!-- END FORM FIELDS -->
+        </span>
+
+      </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="showCreateRecord = false">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="createRecord()">Save</button>
+    </div>
+  </clr-modal>
+</span>
+

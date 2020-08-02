@@ -1,0 +1,48 @@
+<div class="login-wrapper">
+  <form class="login">
+      <section class="title">
+          <!-- <h3 class="welcome">Welcome to</h3> -->
+          <span class="application-name">Maestro</span>
+          
+          <!-- <div class="alert alert-info alert-sm hint" role="alert">
+            <div class="alert-items">
+                <div class="alert-item static">
+                    <div class="alert-icon-wrapper">
+                        <clr-icon class="alert-icon" shape="info-circle"></clr-icon>
+                    </div>
+                    <span class="alert-text">
+                        Sign in with your email address
+                    </span>
+                </div>
+            </div>
+        </div> -->
+          <!-- <h5 class="hint">Sign in with your <strong>email</strong> address</h5> -->
+      </section>
+      <div class="login-group">
+          <clr-select-container>
+              <label class="clr-sr-only">User Role</label>
+              <select clrSelect name="type" [(ngModel)]="creds.strategy">
+                  <option value="local">Local Users</option>
+                  <option value="ldap">Active Directory</option>
+              </select>
+          </clr-select-container>
+          <clr-input-container>
+              <label class="clr-sr-only">Email</label>
+              <input type="text" name="email" clrInput placeholder="email" [(ngModel)]="creds.email"/>
+          </clr-input-container>
+          <clr-password-container>
+              <label class="clr-sr-only">Password</label>
+              <input type="password" name="password" clrPassword placeholder="Password" [(ngModel)]="creds.password"/>
+          </clr-password-container>
+          <!-- <clr-checkbox-wrapper>
+              <label>Remember me</label>
+              <input type="checkbox" name="rememberMe" clrCheckbox [(ngModel)]="creds.rememberMe"/>
+          </clr-checkbox-wrapper> -->
+          <div class="error active" *ngIf="error">
+              {{ errorMessage }}
+          </div>
+          <button type="submit" (click)="login();" class="btn btn-primary">SIGN IN</button>
+          <a href="https://maestrostack.github.io" target="_blank" class="signup">Documentation</a>
+      </div>
+  </form>
+</div>

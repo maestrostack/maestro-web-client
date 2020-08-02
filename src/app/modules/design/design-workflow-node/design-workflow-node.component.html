@@ -1,0 +1,57 @@
+<div class="hv-item">
+	<div class="hv-item-parent" *ngIf="node.children.length >= 0 && !shouldHideChildren(node._id)">
+    <div  (click)="nodeClicked(node._id, node, $event)"  (mousedown)="mouseDown(node._id, node, $event)" (mouseup)="mouseUp(node._id, node, $event)" [ngClass]="node._id == getSelectedNodeID() ? 'simple-card-highlighted': 'simple-card-not-highlighted'">
+        <!-- <div class="popoverbox" (mouseleave)="mouseLeave(node._id, $event)" (mouseenter)="mouseEnter(node._id, $event)">
+            <div [ngClass]="shouldShowPopup(node._id) ? 'popupdescription':'invispopupdescription'">{{node.description}}</div>
+        </div> -->
+        <!-- <button id="addbutton" class="add-button" (click)='addChild(node._id)'></button> -->
+        <button id="expandbutton" class="expand-button rotated-button"(click)='hideChilren(node._id)'></button>
+        <div class="card clickable" clrDroppable (clrDrop)="onResourceDrop($event, node._id);" (click)="updateSelectedNode(node)" style="margin: 0;">
+          <div class="card-block flex-container">
+            <clr-icon [attr.shape]="node.icon"></clr-icon>
+            <span>
+              {{ node.name }}
+            </span>
+          </div>
+        </div>         
+    </div>
+
+  </div>
+  <div class="hv-item-children" *ngIf="node.children.length > 0 && shouldHideChildren(node._id)">
+      <div (click)="nodeClicked(node._id, node, $event)"  (mousedown)="mouseDown(node._id, node, $event)" (mouseup)="mouseUp(node._id, node, $event)" [ngClass]="node._id == getSelectedNodeID() ? 'simple-card-highlighted': 'simple-card-not-highlighted'">
+          <div class="popoverbox" (mouseleave)="mouseLeave(node._id, $event)" (mouseenter)="mouseEnter(node._id, $event)">
+              <!-- <div [ngClass]="shouldShowPopup(node._id) ? 'popupdescription':'invispopupdescription'">{{node.description}}</div> -->
+          </div>
+          <button id="expandbutton" class="expand-button-2"(click)='hideChilren(node._id)'></button>
+          <div class="card clickable" clrDroppable (clrDrop)="onResourceDrop($event, node._id);" (click)="updateSelectedNode(node)" style="margin: 0;">
+            <div class="card-block flex-container">
+              <clr-icon [attr.shape]="node.icon"></clr-icon>
+              <span>
+                {{ node.name }}
+              </span>
+            </div>
+          </div>
+      </div>
+  </div>
+	<div class="hv-item-children" *ngIf="node.children.length > 0 && !shouldHideChildren(node._id)">
+    <div class="hv-item-child onlyfirst" *ngFor="let child of node.children">
+        <app-design-workflow-node *ngIf="child.children.length > 0" [node]="child"></app-design-workflow-node>
+        <div class="hv-item" *ngIf="child.children.length == 0">
+            <div (mouseleave)="mouseLeave(child._id, $event)" (mouseenter)="mouseEnter(child._id, $event)" (click)="nodeClicked(child._id, child, $event)"  (mousedown)="mouseDown(child._id, child, $event)" (mouseup)="mouseUp(child._id, child, $event)" [ngClass]="child._id == getSelectedNodeID() ? 'simple-card-highlighted': 'simple-card-not-highlighted'">
+                <div class="popoverbox" (mouseleave)="mouseLeave(child._id, $event)" (mouseenter)="mouseEnter(child._id, $event)">
+                    <!-- <div [ngClass]="shouldShowPopup(child._id) ? 'popupdescription':'invispopupdescription'">{{child.description}}</div> -->
+                </div>
+              <!-- <button id="addbutton" class="add-button"(click)='addChild(child._id)'></button> -->
+              <div class="card clickable" clrDroppable (clrDrop)="onResourceDrop($event, child._id);" (click)="updateSelectedNode(child)" style="margin: 0;">
+                <div class="card-block flex-container">
+                  <clr-icon [attr.shape]="child.icon"></clr-icon>
+                  <span>
+                    {{ child.name }}
+                  </span>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+  </div>
+</div>
